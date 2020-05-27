@@ -1,0 +1,557 @@
+
+
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta http-equiv="X-UA-Compatible" content="IE=edge" /><title>
+	BCG Portal Travel - Home
+</title><link href="/css/font.googleapis.css" rel="stylesheet" type="text/css" /><link href="/css/glyficons.css" rel="stylesheet" type="text/css" /><link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<script src="/js/jquery-3.3.1.js" type="text/javascript"></script>
+	<script src="/js/bootstrap.min.js" type="text/javascript"></script>
+	<style type="text/css">
+		body {
+			display:none;
+		}
+	</style>
+</head>
+<body style="margin: 0 auto;">
+    <script type="text/javascript" >
+        if (!window.console)
+            console = { log: function () { } };
+        function loadCSS() {
+            var cssAppend = '';
+            try { cssAppend = '00000049_home.css'; }
+            catch (e) { }
+            if (cssAppend!='')
+                $("head").append("<link rel='stylesheet' href='/data/"+cssAppend+"' type='text/css' />");
+        }
+        
+        loadCSS();
+		$(function(){
+            setTimeout(function () { $('body').css({ "display": "block" }) });
+        })
+
+
+        function internalShow(item, idAlert, bPopup, bBanner, width, height, backgroundcolor, color, image, action) {
+            console.log(bBanner);
+            item.data("idalert", idAlert);
+            if (width != null && width != "") {
+                item.css("width", width);
+                if (bPopup)
+                    item.css("left", "calc(50% - " + width + " / 2)");
+            }
+            if (height != null && height != "") {
+                item.css("height", height);
+                if (bPopup)
+                    item.css("top", "calc(50% - " + height + " / 2)");
+                if (bBanner) {
+                    $("#pnContent").css("margin-top", height);
+                    $(".slider-block-content").css("top", "calc(197px + "+height+")");
+                    $("header").css("top", height);
+                    $("body.withDestinationMap header").css("top", "calc(46px + " + height + ")");
+                    $("#destinationMap, #sliderHome").css("min-height", "calc(100vh - " + height + ")");
+                    $("#pnContent, body.withQuickAccess #sliderHome").css("min-height", "calc(100vh - 58px - " + height + ")");
+                }
+            }
+            if (backgroundcolor != null && backgroundcolor != "") {
+                item.css("background-color", backgroundcolor);
+            }
+            if (color != null && color != "") {
+                item.css("color", color);
+                item.find("button").css("border-color", color);
+            }
+            if (image != null && image != "") {
+                item.css("background-image", "url("+image+")");
+            }
+
+            item.removeClass("hidden");
+            if (bPopup) {
+                if ($("#fadewhite").length == 0)
+                    item.after($("<div>").attr("id", "fadewhite"));
+                $("#fadewhite").removeClass("hidden");
+            }
+            if (bBanner) {
+                $("#pnContent").css("margin-top", height);
+            }
+            switch (action) {
+                case 1:
+                    item.addClass("showclose");
+                    break;
+                case 2:
+                    item.addClass("showdonotshowagain");
+                    break;
+                case 3:
+                    item.addClass("showclose");
+                    item.addClass("showdonotshowagain");
+                    break;
+            }
+        }
+
+        function showPopup(idAlert, width, height, backgroundcolor, color, image, action) {
+            internalShow($("#notificationPopup"), idAlert, true, false, width, height, backgroundcolor, color, image, action)
+        }
+
+        $(document).on("click", "#fadewhite", function () {
+            $("#fadewhite").addClass("hidden");
+            $("#notificationPopup").addClass("hidden");
+        });
+        $(document).on("click", ".donotshowagainbutton, .closebutton", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var elem = $(this).parent();
+            if ($(this).hasClass("donotshowagainbutton")) {
+                var idAlert = elem.data("idalert");
+                $.ajax({
+		            type: "POST",
+                    url: "wsConsult.asmx/stopNotification",
+                    data: "{idAlert:"+idAlert+"}",
+		            contentType: "application/json; charset=utf-8",
+		            dataType: "json",
+		            success: function () {}
+                });
+            }
+            if (elem.attr("id") == "notificationPopup")
+                $("#fadewhite").addClass("hidden");
+            if (elem.attr("id") == "notificationBanner") {
+                $("body").removeClass("withTopBanner");
+                $("#pnContent").css("margin-top", "");
+                $(".slider-block-content").css("top", "");
+                $("header").css("top", "");
+                $("#destinationMap, #sliderHome").css("min-height", "");
+                $("#pnContent, body.withQuickAccess #sliderHome").css("min-height", "");
+            }
+            elem.addClass("hidden");
+        });
+
+        function showBanner(idAlert, width, height, backgroundcolor, color, image, action) {
+            $(document).ready(function(){
+            internalShow($("#notificationBanner"), idAlert, false, true, width, height, backgroundcolor, color, image, action)
+            $("body").addClass("withTopBanner");
+            });
+        }
+        function showNotification(idAlert, width, height, backgroundcolor, color, image, action) {
+            internalShow($("#notificationNotification"), idAlert, false, false, width, height, backgroundcolor, color, image, action)
+        }
+    </script>
+    <form method="post" action="./home.aspx" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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b24zLmpwZycpIj4NCgk8ZGl2IGNsYXNzPSJzbGlkZXItYmxvY2stY29udGVudCI+DQoJCTxpbWcgY2xhc3M9Imljb24tcGF1c2UiIGFsdD0iIiBzcmM9Ii9kYXRhLzAwMDAwMDM5X2ljb24tcGF1c2UucG5nIj4JDQoJCTxkaXYgY2xhc3M9InNsaWRlci1jb250ZW50Ij4NCgkJPC9kaXY+DQoJPC9kaXY+DQo8L2Rpdj4NCjxzY3JpcHQ+DQp2YXIgdGFiU2xpZGVyID0gWw0Ke3RpdGxlIDogIkJDRyBwcmVmZXJyZWQgaG90ZWxzIiwgY29udGVudCA6ICJTZWFyY2ggYW1vbmdzdCBvdXIgMSwwMDArIHByZWZlcnJlZCBob3RlbHMgYW5kIHNoYXJlIHlvdXIgZXhwZXJpZW5jZSIsIG5hbWU6ICJGaW5kIG91dCBtb3JlIiwgYTogIj9pZFBhZ2U9MTgifSwNCnt0aXRsZSA6ICJEZXN0aW5hdGlvbiBndWlkZXMiLCBjb250ZW50IDogIlByZXBhcmUgeW91ciB0cmlwIHVzaW5nIEJDRyBkZXN0aW5hdGlvbiBndWlkZXMiLCBuYW1lOiAic2hvdyBtZSIsIGE6ICI/aWRQYWdlPTMzIn0sDQp7dGl0bGUgOiAiT25saW5lIGJvb2tpbmcgdG9vbCIsIGNvbnRlbnQgOiAiQm9vayB5b3VyIG5leHQgYnVzaW5lc3MgdHJpcCBvbmxpbmUiLCBuYW1lOiAiQ2xpY2sgaGVyZSIsIGE6ICJodHRwczovL2UtdHJhdmVsbWFuYWdlbWVudDIuYW1hZGV1cy5jb20vcG9ydGFsQXBwL2FwcGxpY2F0aW9uP0VWRU5UPUxPR0lOX0xPR09VVCZTSVRFPThMSEU4TEhFJkxBTkdVQUdFPUdCIn0sDQp7dGl0bGUgOiAiIiwgY29udGVudCA6ICIiLCBuYW1lOiAiIiwgYTogIiJ9LA0Ke3RpdGxlIDogIiIsIGNvbnRlbnQgOiAiIiwgbmFtZTogIiIsIGE6ICIifQ0KXTsNCjwvc2NyaXB0PmQCBA9kFgJmD2QWAmYPZBYCAgEPZBYCAgEPZBYCZg9kFgJmD2QWAgIBDw8WBB8CGwAAAAAAAFlABwAAAB8DAoACZBYCAgEPDxYEHwIbAAAAAAAAWUAHAAAAHwMCgAJkFgICAQ8WAh8ABZwmPHN0eWxlPgoKCi5tZW51LWl0ZW0sCi5tZW51LW9wZW4tYnV0dG9uIHsKICAgYmFja2dyb3VuZDogIzE3N2I1NzsKICAgbWFyZ2luLWJvdHRvbTogMDsKICAgYm9yZGVyLXJhZGl1czogMTAwJTsKICAgd2lkdGg6IDcwcHg7CiAgIGhlaWdodDogNzBweDsKICAgcG9zaXRpb246IGZpeGVkOwogICB0b3A6IDE4MHB4OwogICByaWdodDogOTBweDsKICAgY29sb3I6ICNGRkZGRkY7CiAgIHRleHQtYWxpZ246IGNlbnRlcjsKICAgbGluZS1oZWlnaHQ6IDcwcHg7CiAgIC13ZWJraXQtdHJhbnNmb3JtOiB0cmFuc2xhdGUzZCgwLCAwLCAwKTsKICAgdHJhbnNmb3JtOiB0cmFuc2xhdGUzZCgwLCAwLCAwKTsKICAgLXdlYmtpdC10cmFuc2l0aW9uOiAtd2Via2l0LXRyYW5zZm9ybSBlYXNlLW91dCAyMDBtczsKICAgdHJhbnNpdGlvbjogLXdlYmtpdC10cmFuc2Zvcm0gZWFzZS1vdXQgMjAwbXM7CiAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSBlYXNlLW91dCAyMDBtczsKICAgdHJhbnNpdGlvbjogdHJhbnNmb3JtIGVhc2Utb3V0IDIwMG1zLCAtd2Via2l0LXRyYW5zZm9ybSBlYXNlLW91dCAyMDBtczsKfQoKLm1lbnUtb3BlbiB7CiAgIGRpc3BsYXk6IG5vbmU7CiAgIG1hcmdpbi1ib3R0b206IDA7CiAgIGJhY2tncm91bmQ6ICM0Q0FGNTA7Cn0KCgouZmFxLW1lbnUgewogICBtYXJnaW46IGF1dG87CiAgIHRvcDogMDsKIHBvc2l0aW9uOiBmaXhlZDsKICB0b3A6IDE4MHB4OwogIHJpZ2h0OiA5MHB4OwogICBsZWZ0OiAwOwogICByaWdodDogMDsKICAgd2lkdGg6IDcwcHg7CiAgIGhlaWdodDogNzBweDsKICAgdGV4dC1hbGlnbjogY2VudGVyOwogICBib3gtc2l6aW5nOiBib3JkZXItYm94OwogICBmb250LXNpemU6IDI2cHg7CiAgIGZvbnQtZmFtaWx5OiJCQ0dIZW5TYW5zTGlnaHQiLCAiSGVsdmV0aWNhIE5ldWUiLCBWZXJkYW5hLCBBcmlhbCwgc2Fucy1zZXJpZjsKfQoKCi8qIC5tZW51LWl0ZW0gewogICB0cmFuc2l0aW9uOiBhbGwgMC4xcyBlYXNlIDBzOwp9ICovCgoubWVudS1pdGVtOmhvdmVyIHsKICAgYmFja2dyb3VuZDogIzRDQUY1MDsKfQoKCi5tZW51LWl0ZW06bnRoLWNoaWxkKDYpIHsKICAgLXdlYmtpdC10cmFuc2l0aW9uLWR1cmF0aW9uOiAxODBtczsKICAgdHJhbnNpdGlvbi1kdXJhdGlvbjogMTgwbXM7Cn0KCi5tZW51LWl0ZW06bnRoLWNoaWxkKDcpIHsKICAgLXdlYmtpdC10cmFuc2l0aW9uLWR1cmF0aW9uOiAxODBtczsKICAgdHJhbnNpdGlvbi1kdXJhdGlvbjogMTgwbXM7Cn0KCi5tZW51LWl0ZW06bnRoLWNoaWxkKDgpIHsKICAgLXdlYmtpdC10cmFuc2l0aW9uLWR1cmF0aW9uOiAxODBtczsKICAgdHJhbnNpdGlvbi1kdXJhdGlvbjogMTgwbXM7Cn0KCi5tZW51LWl0ZW06bnRoLWNoaWxkKDkpIHsKICAgLXdlYmtpdC10cmFuc2l0aW9uLWR1cmF0aW9uOiAxODBtczsKICAgdHJhbnNpdGlvbi1kdXJhdGlvbjogMTgwbXM7Cn0KCi5tZW51LW9wZW4tYnV0dG9uIHsKICAgei1pbmRleDogMjsKICAgLXdlYmtpdC10cmFuc2l0aW9uLXRpbWluZy1mdW5jdGlvbjogY3ViaWMtYmV6aWVyKDAuMTc1LCAwLjg4NSwgMC4zMiwgMS4yNzUpOwogICB0cmFuc2l0aW9uLXRpbWluZy1mdW5jdGlvbjogY3ViaWMtYmV6aWVyKDAuMTc1LCAwLjg4NSwgMC4zMiwgMS4yNzUpOwogICAtd2Via2l0LXRyYW5zaXRpb24tZHVyYXRpb246IDQwMG1zOwogICB0cmFuc2l0aW9uLWR1cmF0aW9uOiA0MDBtczsKICAgLXdlYmtpdC10cmFuc2Zvcm06IHNjYWxlKDEuMSwgMS4xKSB0cmFuc2xhdGUzZCgwLCAwLCAwKTsKICAgdHJhbnNmb3JtOiBzY2FsZSgxLjEsIDEuMSkgdHJhbnNsYXRlM2QoMCwgMCwgMCk7CiAgIGN1cnNvcjogcG9pbnRlcjsKICAgYm94LXNoYWRvdzogM3B4IDNweCAwIDAgcmdiYSgwLCAwLCAwLCAwLjE0KTsKfQoKLm1lbnUtb3Blbi1idXR0b246aG92ZXIgewogICAtd2Via2l0LXRyYW5zZm9ybTogc2NhbGUoMS4yLCAxLjIpIHRyYW5zbGF0ZTNkKDAsIDAsIDApOwogICB0cmFuc2Zvcm06IHNjYWxlKDEuMiwgMS4yKSB0cmFuc2xhdGUzZCgwLCAwLCAwKTsKfQoKLm1lbnUtb3BlbjpjaGVja2VkICsgLm1lbnUtb3Blbi1idXR0b24gewogICAtd2Via2l0LXRyYW5zaXRpb24tdGltaW5nLWZ1bmN0aW9uOiBsaW5lYXI7CiAgIHRyYW5zaXRpb24tdGltaW5nLWZ1bmN0aW9uOiBsaW5lYXI7CiAgIC13ZWJraXQtdHJhbnNpdGlvbi1kdXJhdGlvbjogMjAwbXM7CiAgIHRyYW5zaXRpb24tZHVyYXRpb246IDIwMG1zOwogICAtd2Via2l0LXRyYW5zZm9ybTogc2NhbGUoMC44LCAwLjgpIHRyYW5zbGF0ZTNkKDAsIDAsIDApOwogICB0cmFuc2Zvcm06IHNjYWxlKDAuOCwgMC44KSB0cmFuc2xhdGUzZCgwLCAwLCAwKTsKfQoKLm1lbnUtb3BlbjpjaGVja2VkIH4gLm1lbnUtaXRlbSB7CiAgIC13ZWJraXQtdHJhbnNpdGlvbi10aW1pbmctZnVuY3Rpb246IGN1YmljLWJlemllcigwLjkzNSwgMCwgMC4zNCwgMS4zMyk7CiAgIHRyYW5zaXRpb24tdGltaW5nLWZ1bmN0aW9uOiBjdWJpYy1iZXppZXIoMC45MzUsIDAsIDAuMzQsIDEuMzMpOwp9CgoubWVudS1vcGVuOmNoZWNrZWQgfiAubWVudS1pdGVtOm50aC1jaGlsZCgzKSB7CiAgIHRyYW5zaXRpb24tZHVyYXRpb246IDE4MG1zOwogICAtd2Via2l0LXRyYW5zaXRpb24tZHVyYXRpb246IDE4MG1zOwogICAtd2Via2l0LXRyYW5zZm9ybTogdHJhbnNsYXRlM2QoMC4wODM2MXB4LCAxMDQuOTk5OTdweCwgMCk7CiAgIHRyYW5zZm9ybTogdHJhbnNsYXRlM2QoMC4wODM2MXB4LCAxMDQuOTk5OTdweCwgMCk7Cn0KCi5tZW51LW9wZW46Y2hlY2tlZCB+IC5tZW51LWl0ZW06bnRoLWNoaWxkKDQpIHsKICAgdHJhbnNpdGlvbi1kdXJhdGlvbjogMjgwbXM7CiAgIC13ZWJraXQtdHJhbnNpdGlvbi1kdXJhdGlvbjogMjgwbXM7CiAgIC13ZWJraXQtdHJhbnNmb3JtOiB0cmFuc2xhdGUzZCgtOTAuODYyOTFweCwgNTIuNjIwNjRweCwgMCk7CiAgdHJhbnNmb3JtOiB0cmFuc2xhdGUzZCgtOTAuODYyOTFweCwgNTIuNjIwNjRweCwgMCk7Cgp9CgoubWVudS1vcGVuOmNoZWNrZWQgfiAubWVudS1pdGVtOm50aC1jaGlsZCg1KSB7CiAgIHRyYW5zaXRpb24tZHVyYXRpb246IDY4MG1zOwogICAtd2Via2l0LXRyYW5zaXRpb24tZHVyYXRpb246IDY4MG1zOwogICAtd2Via2l0LXRyYW5zZm9ybTogdHJhbnNsYXRlM2QoLTkxLjAzMDA2cHgsIC01Mi4zMzA5NXB4LCAwKTsKICB0cmFuc2Zvcm06IHRyYW5zbGF0ZTNkKC05MS4wMzAwNnB4LCAtNTIuMzMwOTVweCwgMCk7Cn0KCgouZmFxLWdyZWVuIHsKICAgYmFja2dyb3VuZC1jb2xvcjogIzE3N2I1NzsKICAgYm94LXNoYWRvdzogMnB4IDJweCAwIDAgcmdiYSgwLCAwLCAwLCAwLjE0KTsKICAgdGV4dC1zaGFkb3c6IDFweCAxcHggMCByZ2JhKDAsIDAsIDAsIDAuMTIpOwp9CgouYmx1ZTpob3ZlciB7CiAgIGNvbG9yOiAjNENBRjUwOwogICB0ZXh0LXNoYWRvdzogbm9uZTsKfQoKLmVtYWlsLWdyZWVuIHsKICAgYmFja2dyb3VuZC1jb2xvcjogIzE3N2I1NzsKICAgYm94LXNoYWRvdzogMnB4IDJweCAwIDAgcmdiYSgwLCAwLCAwLCAwLjE0KTsKICAgdGV4dC1zaGFkb3c6IDFweCAxcHggMCByZ2JhKDAsIDAsIDAsIDAuMTIpOwp9CgouZ3JlZW46aG92ZXIgewogICBjb2xvcjogIzRDQUY1MDsKICAgdGV4dC1zaGFkb3c6IG5vbmU7Cn0KCi5lbWFpbC1wdXJwbGUgewogICBiYWNrZ3JvdW5kLWNvbG9yOiAjMTc3YjU3OwogICBib3gtc2hhZG93OiAycHggMnB4IDAgMCByZ2JhKDAsIDAsIDAsIDAuMTQpOwogICB0ZXh0LXNoYWRvdzogMXB4IDFweCAwIHJnYmEoMCwgMCwgMCwgMC4xMik7Cn0KCi5wdXJwbGU6aG92ZXIgewogICBjb2xvcjogIzRDQUY1MDsKICAgdGV4dC1zaGFkb3c6IG5vbmU7Cn0KCjwvc3R5bGU+CjxkaXY+CiAgIDxpbnB1dCB0eXBlPSJjaGVja2JveCIgaHJlZj0iIyIgY2xhc3M9Im1lbnUtb3BlbiIgbmFtZT0ibWVudS1vcGVuIiBpZD0ibWVudS1vcGVuIj4KICAgPGxhYmVsIGNsYXNzPSJtZW51LW9wZW4tYnV0dG9uIiBmb3I9Im1lbnUtb3BlbiI+CiAgICA8c3Bhbj48aW1nIHNyYz0iL2RhdGEvMDAwMDEwMzlfcXVlc3Rpb25fbWFyay5wbmciIHN0eWxlPSJ3aWR0aDo3MHB4OyBoZWlnaHQ6NzBweDsgcGFkZGluZy1ib3R0b206NXB4OyI+IDwvc3Bhbj4KICA8L2xhYmVsPgoKICAKICA8YSBocmVmPSJodHRwOi8vdHJhdmVscG9ydGFsdHN0LmJjZy5jb20vaG9tZS5hc3B4P2lkUGFnZT0xMiIgY2xhc3M9Im1lbnUtaXRlbSBlbWFpbC1wdXJwbGUiIHRpdGxlPSJDb250YWN0IHRoZSBUcmF2ZWwgQWdlbmN5Ij4gPGNlbnRlcj4gPGltZyBzcmM9Ii9kYXRhLzAwMDAxMDMzX0FNRVhfd2hpdGUucG5nIiBzdHlsZT0id2lkdGg6NDBweDsgaGVpZ2h0OjUwcHg7IHBhZGRpbmctYm90dG9tOjNweDsgIj4gPC9jZW50ZXI+IDwvYT4KICAgPGEgaHJlZj0ibWFpbHRvOmdsb2JhbHRyYXZlbHBvcnRhbEBiY2cuY29tP2JvZHk9Rm9yIGFueSBxdWVzdGlvbnMgb3IgaXNzdWVzIHdpdGggYm9va2luZ3MsIHBsZWFzZSBjb250YWN0IHRoZSB0cmF2ZWwgYWdlbmN5LiBDb250YWN0IGRldGFpbHMgYXJlIGF2YWlsYWJsZSB1bmRlciB0aGUgbWVudSBib29rIG15IHRyaXAgLyBBbWV4IEdCVCBXVyBjb250YWN0IGxpc3QiIGNsYXNzPSJtZW51LWl0ZW0gZW1haWwtZ3JlZW4iIHRpdGxlPSJFbWFpbCBCQ0cgR2xvYmFsIFRyYXZlbCI+IDxjZW50ZXI+IDxpbWcgc3JjPSIvZGF0YS8wMDAwMTAzMV9lZGl0LWRvY3VtZW50LXdoaXRlLnBuZyIgc3R5bGU9IndpZHRoOjQwcHg7IGhlaWdodDo0MHB4OyAgIj4gPC9jZW50ZXI+IDwvYT4KIDxhIGhyZWY9Imh0dHA6Ly90cmF2ZWxwb3J0YWx0c3QuYmNnLmNvbS9ob21lLmFzcHg/aWRQYWdlPTE4NyIgY2xhc3M9Im1lbnUtaXRlbSBmYXEtZ3JlZW4iIHRpdGxlPSJGQVFzIj4gPGNlbnRlcj4gRkFRcyA8L2NlbnRlcj48L2E+CjwvZGl2PgpkAgUPZBYCZg9kFgJmD2QWAgIBD2QWAgIBD2QWAmYPZBYCZg9kFgICAQ8PFgQfAhsAAAAAAABZQAcAAAAfAwKAAmQWAgIBDw8WBB8CGwAAAAAAAFlABwAAAB8DAoACZBYCAgEPFgIfAAWwBDxkaXYgaWQ9InF1aWNrQWNjZXNzIiBjbGFzcz0icm93Ij4KCTxkaXYgY2xhc3M9ImNvbCI+CgkJPGEgaHJlZj0iP2lkUGFnZT0xOCI+CgkJCTxpbWcgY2xhc3M9Imljb25zIiBhbHQ9IiIgc3JjPSIvZGF0YS8wMDAwMDA0MV9xdWlja2FjY2Vzcy1ob3RlbC5wbmciPgoJCQlMb29raW5nIGZvciBhIGhvdGVsID8KCQk8L2E+Cgk8L2Rpdj4KCTxkaXYgY2xhc3M9ImNvbCI+CgkJPGEgaHJlZj0iaHR0cDovL3RyYXZlbHBvcnRhbHRzdC5iY2cuY29tL2hvbWUuYXNweD9pZFBhZ2U9MjAzIiB0YXJnZXQ9Il9ibGFuayI+CgkJCTxpbWcgY2xhc3M9Imljb25zIiBhbHQ9IiIgc3JjPSIvZGF0YS8wMDAwMDA0Ml9xdWlja2FjY2Vzcy1wbGFuZS5wbmciPgoJCQlCb29rIG15IHRyaXAKCQk8L2E+Cgk8L2Rpdj4KCTxkaXYgY2xhc3M9ImNvbCI+CgkJPGEgaHJlZj0iP2lkUGFnZT0zMyI+CgkJCTxpbWcgY2xhc3M9Imljb25zIiBhbHQ9IiIgc3JjPSIvZGF0YS8wMDAwMDA0M19xdWlja2FjY2Vzcy1kZXN0aW5hdGlvbi5wbmciPgoJCQlEZXN0aW5hdGlvbiBHdWlkZXMKCQk8L2E+Cgk8L2Rpdj4KPC9kaXY+ZGQF7pxiP16eStSuMaYheLeP9Ow5MAJ46mGTpGmma0GAXg==" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=2hS2CRiZosQwsveDLceHvZbgUwvV8NwYpaw5LvvtgRxJXlyCUU1ZJ0iSHVMFw0TgQgkl6qagW9Hi11iMOYLXkQFpDtIfs43D3g_rZcibxUA1&amp;t=637100830300000000" type="text/javascript"></script>
+
+
+<script src="/ScriptResource.axd?d=jOeG2QRZXyGOlm4kkpCR23FrDxKDmh1Sr1kT1tRbCaBGLji_UCd-JlP2qphi1O0xUJwSUMAeM1kkJmJOd1o6wHPnQQ9IIrHmYW1mD7YLydmDfNZmRgpeV_3E1gQ4DtQLKbLG0iXxNSOs0BEQQhiH2QcxBGKpRLQsMPly4tzoEi01&amp;t=ffffffff9a9577e8" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=x-nqOU8ED6bunLLK1DwCVVCgvX3Vol-xTpIcbAiakV7wNEqklXXEHapUl5jlrxpKqk6elDlDxIxsmcAvFJnmd7FywZVJw5muk5PjB8ePp5Y17Tyc_wD6DyAQzs_p7FTHdzxOObs3nI8t5kxV7XsnjJPi-L5mnoTX2J60SpLjEW6uyOhy4GIiVZLXADncJb4G0&amp;t=ffffffff9a9577e8" type="text/javascript"></script>
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="8D0E13E6" />
+</div>
+        <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ScriptManager1', 'form1', ['tUpdatePanel1','UpdatePanel1','tLine1$upLine','Line1_upLine','tLine1$Element0$upElement','Line1_Element0_upElement','tLine0$upLine','Line0_upLine','tLine2$upLine','Line2_upLine','tLine2$Element0$upElement','Line2_Element0_upElement','tLine3$upLine','Line3_upLine','tLine3$Element0$upElement','Line3_Element0_upElement','tLine4$upLine','Line4_upLine','tLine4$Element0$upElement','Line4_Element0_upElement'], [], [], 90, '');
+//]]>
+</script>
+  
+        <div>
+            <div id="UpdatePanel1" class="">
+	
+                    <div id="pnContent">
+		
+                    <div id="Line1_upLine" class="wucLine">
+			 
+        <div id="Line1_pnLine" class="pnLine">
+				
+        
+<div class="wucElement top_slider">
+    <div id="Line1_Element0_upElement">
+					
+            <div id="Line1_Element0_pnElement" class="element">
+						 
+                <div id="Line1_Element0_pnContent" style="">
+							
+                    <div class="overlay hidden"></div>	<!-- dqcc -->
+<nav id="navigation" class="hidden">
+	<div>
+		<a href="?">
+			<span class="icon-nav-logo"></span>
+		</a>
+	</div>
+
+	<img id="icon-close" alt="" src="/data/00000050_icon-close.png">
+
+	<a class="main-menu" href="?">Main Menu</a>
+
+	<div class="nav-first-level">
+		<ul>
+			<li>
+				<a href="" id="community">Community<span class="icon-nav-arrow"></span></a>
+				<div class="nav-second-level">
+				</div>
+			</li>
+			<li>
+				<a href="" id="bookatrip">Book A Trip<span class="icon-nav-arrow"></span></a>
+				<div class="nav-second-level">
+				</div>
+			</li>	
+			<li>
+				<a href="" id="travelsmart">Travel Smart<span class="icon-nav-arrow"></span></a>
+				<div class="nav-second-level">
+				</div>
+			</li>
+			<li>
+				<a href="" id="security">Security<span class="icon-nav-arrow"></span></a>
+				<div class="nav-second-level">
+				</div>
+			</li>
+		</ul>
+	</div>
+</nav>
+<header id="menuburger">
+	<ul>
+		<li><a id="icon-bcg" class="icon-nav-menu-bcg-logo" href="?"></a></li>
+		<li><a id="icon-menu-burger" href="">
+			<span></span>
+			<span></span>
+			<span></span>
+		</a></li>
+		<li>
+			<a id="icon-info-user" href=""><img class="icons" src="/data/00000037_icon-face-white.png" alt=""></a>
+			<div id="infos-user">
+				<span id="nameUser"></span><span id="locUser" class="green bold"></span>
+			</div>
+		</li>
+	</ul>
+</header>
+<script src="/data/00000016_menu.js"></script>
+
+                
+						</div>
+            
+					</div>
+        
+				</div>
+</div>
+			</div>
+    
+		</div><div id="Line0_upLine" class="wucLine">
+			 
+        
+    
+		</div><div id="Line2_upLine" class="wucLine">
+			 
+        <div id="Line2_pnLine" class="pnLine">
+				
+        
+<div class="wucElement ">
+    <div id="Line2_Element0_upElement">
+					
+            <div id="Line2_Element0_pnElement" class="element" style="width:100%;">
+						 
+                <div id="Line2_Element0_pnContent" style="width:100%;">
+							
+                    <div id="sliderHome" style="background-image:url('/data/00001027_london3.jpg')">
+	<div class="slider-block-content">
+		<img class="icon-pause" alt="" src="/data/00000039_icon-pause.png">	
+		<div class="slider-content">
+		</div>
+	</div>
+</div>
+<script>
+var tabSlider = [
+{title : "BCG preferred hotels", content : "Search amongst our 1,000+ preferred hotels and share your experience", name: "Find out more", a: "?idPage=18"},
+{title : "Destination guides", content : "Prepare your trip using BCG destination guides", name: "show me", a: "?idPage=33"},
+{title : "Online booking tool", content : "Book your next business trip online", name: "Click here", a: "https://e-travelmanagement2.amadeus.com/portalApp/application?EVENT=LOGIN_LOGOUT&SITE=8LHE8LHE&LANGUAGE=GB"},
+{title : "", content : "", name: "", a: ""},
+{title : "", content : "", name: "", a: ""}
+];
+</script>
+                
+						</div>
+            
+					</div>
+        
+				</div>
+</div>
+			</div>
+    
+		</div><div id="Line3_upLine" class="wucLine">
+			 
+        <div id="Line3_pnLine" class="pnLine">
+				
+        
+<div class="wucElement ">
+    <div id="Line3_Element0_upElement">
+					
+            <div id="Line3_Element0_pnElement" class="element" style="width:100%;">
+						 
+                <div id="Line3_Element0_pnContent" style="width:100%;">
+							
+                    <style>
+
+
+.menu-item,
+.menu-open-button {
+   background: #177b57;
+   margin-bottom: 0;
+   border-radius: 100%;
+   width: 70px;
+   height: 70px;
+   position: fixed;
+   top: 180px;
+   right: 90px;
+   color: #FFFFFF;
+   text-align: center;
+   line-height: 70px;
+   -webkit-transform: translate3d(0, 0, 0);
+   transform: translate3d(0, 0, 0);
+   -webkit-transition: -webkit-transform ease-out 200ms;
+   transition: -webkit-transform ease-out 200ms;
+   transition: transform ease-out 200ms;
+   transition: transform ease-out 200ms, -webkit-transform ease-out 200ms;
+}
+
+.menu-open {
+   display: none;
+   margin-bottom: 0;
+   background: #4CAF50;
+}
+
+
+.faq-menu {
+   margin: auto;
+   top: 0;
+ position: fixed;
+  top: 180px;
+  right: 90px;
+   left: 0;
+   right: 0;
+   width: 70px;
+   height: 70px;
+   text-align: center;
+   box-sizing: border-box;
+   font-size: 26px;
+   font-family:"BCGHenSansLight", "Helvetica Neue", Verdana, Arial, sans-serif;
+}
+
+
+/* .menu-item {
+   transition: all 0.1s ease 0s;
+} */
+
+.menu-item:hover {
+   background: #4CAF50;
+}
+
+
+.menu-item:nth-child(6) {
+   -webkit-transition-duration: 180ms;
+   transition-duration: 180ms;
+}
+
+.menu-item:nth-child(7) {
+   -webkit-transition-duration: 180ms;
+   transition-duration: 180ms;
+}
+
+.menu-item:nth-child(8) {
+   -webkit-transition-duration: 180ms;
+   transition-duration: 180ms;
+}
+
+.menu-item:nth-child(9) {
+   -webkit-transition-duration: 180ms;
+   transition-duration: 180ms;
+}
+
+.menu-open-button {
+   z-index: 2;
+   -webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+   transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+   -webkit-transition-duration: 400ms;
+   transition-duration: 400ms;
+   -webkit-transform: scale(1.1, 1.1) translate3d(0, 0, 0);
+   transform: scale(1.1, 1.1) translate3d(0, 0, 0);
+   cursor: pointer;
+   box-shadow: 3px 3px 0 0 rgba(0, 0, 0, 0.14);
+}
+
+.menu-open-button:hover {
+   -webkit-transform: scale(1.2, 1.2) translate3d(0, 0, 0);
+   transform: scale(1.2, 1.2) translate3d(0, 0, 0);
+}
+
+.menu-open:checked + .menu-open-button {
+   -webkit-transition-timing-function: linear;
+   transition-timing-function: linear;
+   -webkit-transition-duration: 200ms;
+   transition-duration: 200ms;
+   -webkit-transform: scale(0.8, 0.8) translate3d(0, 0, 0);
+   transform: scale(0.8, 0.8) translate3d(0, 0, 0);
+}
+
+.menu-open:checked ~ .menu-item {
+   -webkit-transition-timing-function: cubic-bezier(0.935, 0, 0.34, 1.33);
+   transition-timing-function: cubic-bezier(0.935, 0, 0.34, 1.33);
+}
+
+.menu-open:checked ~ .menu-item:nth-child(3) {
+   transition-duration: 180ms;
+   -webkit-transition-duration: 180ms;
+   -webkit-transform: translate3d(0.08361px, 104.99997px, 0);
+   transform: translate3d(0.08361px, 104.99997px, 0);
+}
+
+.menu-open:checked ~ .menu-item:nth-child(4) {
+   transition-duration: 280ms;
+   -webkit-transition-duration: 280ms;
+   -webkit-transform: translate3d(-90.86291px, 52.62064px, 0);
+  transform: translate3d(-90.86291px, 52.62064px, 0);
+
+}
+
+.menu-open:checked ~ .menu-item:nth-child(5) {
+   transition-duration: 680ms;
+   -webkit-transition-duration: 680ms;
+   -webkit-transform: translate3d(-91.03006px, -52.33095px, 0);
+  transform: translate3d(-91.03006px, -52.33095px, 0);
+}
+
+
+.faq-green {
+   background-color: #177b57;
+   box-shadow: 2px 2px 0 0 rgba(0, 0, 0, 0.14);
+   text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.12);
+}
+
+.blue:hover {
+   color: #4CAF50;
+   text-shadow: none;
+}
+
+.email-green {
+   background-color: #177b57;
+   box-shadow: 2px 2px 0 0 rgba(0, 0, 0, 0.14);
+   text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.12);
+}
+
+.green:hover {
+   color: #4CAF50;
+   text-shadow: none;
+}
+
+.email-purple {
+   background-color: #177b57;
+   box-shadow: 2px 2px 0 0 rgba(0, 0, 0, 0.14);
+   text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.12);
+}
+
+.purple:hover {
+   color: #4CAF50;
+   text-shadow: none;
+}
+
+</style>
+<div>
+   <input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open">
+   <label class="menu-open-button" for="menu-open">
+    <span><img src="/data/00001039_question_mark.png" style="width:70px; height:70px; padding-bottom:5px;"> </span>
+  </label>
+
+  
+  <a href="http://travelportaltst.bcg.com/home.aspx?idPage=12" class="menu-item email-purple" title="Contact the Travel Agency"> <center> <img src="/data/00001033_AMEX_white.png" style="width:40px; height:50px; padding-bottom:3px; "> </center> </a>
+   <a href="mailto:globaltravelportal@bcg.com?body=For any questions or issues with bookings, please contact the travel agency. Contact details are available under the menu book my trip / Amex GBT WW contact list" class="menu-item email-green" title="Email BCG Global Travel"> <center> <img src="/data/00001031_edit-document-white.png" style="width:40px; height:40px;  "> </center> </a>
+ <a href="http://travelportaltst.bcg.com/home.aspx?idPage=187" class="menu-item faq-green" title="FAQs"> <center> FAQs </center></a>
+</div>
+
+                
+						</div>
+            
+					</div>
+        
+				</div>
+</div>
+			</div>
+    
+		</div><div id="Line4_upLine" class="wucLine">
+			 
+        <div id="Line4_pnLine" class="pnLine">
+				
+        
+<div class="wucElement ">
+    <div id="Line4_Element0_upElement">
+					
+            <div id="Line4_Element0_pnElement" class="element" style="width:100%;">
+						 
+                <div id="Line4_Element0_pnContent" style="width:100%;">
+							
+                    <div id="quickAccess" class="row">
+	<div class="col">
+		<a href="?idPage=18">
+			<img class="icons" alt="" src="/data/00000041_quickaccess-hotel.png">
+			Looking for a hotel ?
+		</a>
+	</div>
+	<div class="col">
+		<a href="http://travelportaltst.bcg.com/home.aspx?idPage=203" target="_blank">
+			<img class="icons" alt="" src="/data/00000042_quickaccess-plane.png">
+			Book my trip
+		</a>
+	</div>
+	<div class="col">
+		<a href="?idPage=33">
+			<img class="icons" alt="" src="/data/00000043_quickaccess-destination.png">
+			Destination Guides
+		</a>
+	</div>
+</div>
+                
+						</div>
+            
+					</div>
+        
+				</div>
+</div>
+			</div>
+    
+		</div>
+	</div>
+                    <div id="notificationPopup" class="hidden">
+                        <span class="icon-deep-mode-close closebutton"></span>
+                        <div></div>
+                        <button class="donotshowagainbutton">Do not show again</button>
+                    </div>
+                    <div id="notificationBanner" class="hidden">
+                        <span class="icon-deep-mode-close closebutton"></span>
+                        <div></div>
+                        <button class="donotshowagainbutton">Do not show again</button>
+                    </div>
+                    <div id="notificationNotification" class="hidden">
+                        <span class="icon-deep-mode-close closebutton"></span>
+                        <div></div>
+                        <button class="donotshowagainbutton">Do not show again</button>
+                    </div>
+                
+</div>
+        </div>
+    </form>
+</body>
+</html>
